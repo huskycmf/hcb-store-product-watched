@@ -5,7 +5,7 @@ use HcCore\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Review
+ * Watched
  *
  * @ORM\Table(name="store_product_watched")
  * @ORM\Entity
@@ -13,17 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Watched implements EntityInterface
 {
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Product
      *
-     * @ORM\ManyToMany(targetEntity="HcbStoreProduct\Entity\Product", cascade={"persist"})
-     * @ORM\JoinTable(name="store_product_has_store_product_review",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="store_product_review_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="store_product_id", referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\Id
+     * @ORM\OneToOne(targetEntity="HcbStoreProduct\Entity\Product")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="store_product_id", referencedColumnName="id")
+     * })
      */
     private $product;
 
@@ -33,4 +29,50 @@ class Watched implements EntityInterface
      * @ORM\Column(name="created_timestamp", type="datetime", nullable=false)
      */
     private $createdTimestamp;
+
+    /**
+     * Set createdTimestamp
+     *
+     * @param \DateTime $createdTimestamp
+     * @return Watched
+     */
+    public function setCreatedTimestamp($createdTimestamp)
+    {
+        $this->createdTimestamp = $createdTimestamp;
+
+        return $this;
+    }
+
+    /**
+     * Get createdTimestamp
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedTimestamp()
+    {
+        return $this->createdTimestamp;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \HcbStoreProduct\Entity\Product $product
+     * @return Watched
+     */
+    public function setProduct(\HcbStoreProduct\Entity\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \HcbStoreProduct\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
 }
